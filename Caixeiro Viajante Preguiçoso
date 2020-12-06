@@ -1,2 +1,21 @@
-# Questao2
-Garotes de Programa- Ayla Rodrigues de Moura, Douglas Mareli, Jõao , Sofia Kitaeva - Questão 2
+//Questao2
+//Garotes de Programa- Ayla Rodrigues de Moura, Douglas Mareli, João Vitor Spala , Sofia Kitaeva - Questão 2
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <time.h>
+#include <limits.h>
+
+//armazenando a distancia entre as cidades
+	int main()
+	{
+		int cidades[30][30];
+
+		//entrada das distancias
+		for (int i = 1; i <30; ++i)
+			for (int j = 1; j <30; ++j)
+			{
+				printf("Qual a distancia da cidade %d e a cidade %d?\n", i , j+i);
+				scanf("%d", &cidades[i][j]);
+			}
