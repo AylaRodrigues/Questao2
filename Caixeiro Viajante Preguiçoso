@@ -11,25 +11,37 @@
 //armazenando a distancia entre as cidades
 	int main()
 	{
+		setlocale(LC_ALL, "");
 		int cidades[30][30];
-		//neutralizar a matriz
-		for(int i+ = 1; i < 30; i++)
-		{
-			for(int j = 1; j< 30; j++)
-			{
-				cidades[i][j] = 0;
-			}
-		}
 	    
 	    //entrada das distancias
-		for (int i = 1; i <30; ++i)
-			for (int j = 1; j <30; ++j)
+		for (int i = 0; i <30; ++i)
+		{
+			for (int j = 0; j <30; ++j)
 			{   
-				if(i+1!=j+1)
+				if(i!=j && j>i)
 				{
 				printf("Qual a distancia da cidade %d e a cidade %d?\n", i+1 , j+1);
 				scanf("%d", &cidades[i][j]);
+				}else if(i == j)
+				{
+					cidades[i][j]= 0;
+				}else if(j<i)
+				{
+					cidades[i][j]=cidades[j][i];
 				}
 			}
+		}
+		
+		//printar distancias
+		for (int i = 0; i <30; ++i)
+		{
+			for (int j = 0; j <30; ++j)
+			{   
+				printf("Distancia da cidade %d e %d é %d \n",i+1,j+1,cidades[i][j]);
+			}		
+		}
+		
+		
 	return 0;
 	}
