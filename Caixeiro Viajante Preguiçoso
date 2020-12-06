@@ -4,91 +4,74 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#include <time.h>
 #include <limits.h>
-//LEMBRAR DE MUDAR PRA 30 AO INVES DE 3
 
 //armazenando a distancia entre as cidades
 	int main()
 	{
+		setlocale(LC_ALL, "");
 		int cidades[3][3];
-		
-		//neutralizar a matriz
-		for(int i = 0; i < 3; i++)
-		{
-			for(int j = 0; j< 3; j++)
-			{
-				cidades[i][j] = 0;
-			}
-		}
-		//para igualar a distancia de [j][i] a distancia de [i][j]
-		for(int i = 0; i < 3; i++)
-		{
-			for(int j = 0; j< 3; j++)
-			{
-		         if ( cidades[i] == cidades[j] && cidades[j] == cidades[i] )
-				{
-					cidades[j][i]=cidades[i][j];
-				}
-			}
-		}	
-
+	    
 	    //entrada das distancias
 		for (int i = 0; i <3; ++i)
+		{
 			for (int j = 0; j <3; ++j)
 			{   
-				if( i+1!=j+1 )
+				if(i!=j && j>i)
 				{
-					
 				printf("Qual a distancia da cidade %d e a cidade %d?\n", i+1 , j+1);
 				scanf("%d", &cidades[i][j]);
+				}else if(i == j)
+				{
+					cidades[i][j]= 0;
+				}else if(j<i)
+				{
+					cidades[i][j]=cidades[j][i];
 				}
 			}
-		
-
-		//printando a matriz pra ver se ta funcionando	
-		for (int i = 0; i <3; ++i)
-		{
-			for (int j = 0; j <3; ++j)
-			{
-				printf("%d", cidades[i][j]);
-			}
-			printf("\n");
 		}
-
+		
 		//iniciar com a escolha da cidade de partida
 		int inicio;
+		int visitadas[3]; //0 para não visitadas e 1 para visitadas
 		printf("Qual a cidade de partida?\n");
 		scanf("%d", &inicio);
-
-		//trocando a matriz pra linha ser a cidade de partida
-		for (int i = 0; i <3; ++i)
-			for (int j = 0; j <3; ++j)
-				for (int inicio; inicio <3; ++inicio)
-				{
-					cidades[i][j]=cidades[inicio][j];
-				}	
-
-		for (int i = inicio; i <3; ++i)
-		{
-			for (int j = 0; j <3; ++j)
-			{
-				printf("%d", cidades[inicio][j]);
-			}
-			printf("\n");
-		}
-
-		//avaliar as colunas pra ver o menor valor de acordo com a linha "inicio" e depois avaliar as proximas coluna com linha "menor valor da coluna anterior"
-		//fazer isso 29 vezes + o retorno da penultima cidade para a primeira
-		//o menor do próximo tem que ser diferente de 0 e diferente da ultima linha
 		
-		int menor;
-		for (int i = 0; i <3; ++i)
-			for (int j = 0; j <3; ++j)
-			{
-				cidades[inicio][j]=cidades[menor][j];
-			}	
+		//atribuir 0 para todas as visitidas
+		for(int i= 0; i<3; i++)
+		{
+			visitadas[i]=0;
+		}
+		
+		visitadas[inicio-1] = 1;
+		int ct, menor,cidadeProxima;
+		
+		ct = inicio-1;
+		
+		if(ct==0){
+			menor=cidades[0][1];
+		}else{
+			menor=cidades[inicio-1][0];
+		}
+		
+		for(int i=0; i<3; i++)
+		{
+			if(i != ct){
+				if(menor >= cidades[ct][i])
+				{
+					menor = cidades[ct][i];
+					cidadeProxima = i+1;
+					printf("menor distancia: %d cidade proxima: %d\n",menor,cidadeProxima);
+				}
+			}
+		}
+		printf("Cidade mais próxima é %d e a distancia é %d", cidadeProxima,menor);
+		
+        
+        
 		//somar as distancias que foram escolhidas
-		return 0;
-
+	
+		
+		
+	return 0;
 	}
