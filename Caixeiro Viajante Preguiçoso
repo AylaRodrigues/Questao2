@@ -7,15 +7,29 @@
 #include <time.h>
 #include <limits.h>
 
+
 //armazenando a distancia entre as cidades
 	int main()
 	{
 		int cidades[30][30];
-
-		//entrada das distancias
+		//neutralizar a matriz
+		for(int i = 1; i < 30; i++)
+		{
+			for(int j = 1; j< 30; j++)
+			{
+				cidades[i][j] = 0;
+			}
+		}
+	    
+	    //entrada das distancias
 		for (int i = 1; i <30; ++i)
 			for (int j = 1; j <30; ++j)
-			{
-				printf("Qual a distancia da cidade %d e a cidade %d?\n", i , j+i);
+			{   
+				if(i!=j+1)
+				{
+				printf("Qual a distancia da cidade %d e a cidade %d?\n", i , j+1);
 				scanf("%d", &cidades[i][j]);
+				}
 			}
+	return 0;
+	}
