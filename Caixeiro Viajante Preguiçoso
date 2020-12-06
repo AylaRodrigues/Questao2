@@ -26,7 +26,6 @@
 		{
 			for(int j = 0; j< 3; j++)
 			{
-				
 		         if ( cidades[i][j] == cidades[j][i] )
 				{
 					cidades[j][i]=cidades[i][j];
@@ -38,7 +37,6 @@
 		for (int i = 0; i <3; ++i)
 			for (int j = 0; j <3; ++j)
 			{   
-
 				if( i+1!=j+1 || cidades[i][j] != cidades[j][i] )
 				{
 					
@@ -50,11 +48,13 @@
 
 		//printando a matriz pra ver se ta funcionando	
 		for (int i = 0; i <3; ++i)
+		{
 			for (int j = 0; j <3; ++j)
 			{
 				printf("%d", cidades[i][j]);
 			}
 			printf("\n");
+		}
 		
 		//iniciar com a escolha da cidade de partida
 		int inicio;
@@ -68,8 +68,8 @@
 					cidades[i][j]=cidades[inicio][j];
 				}	
 
-		//avaliar as colunas pra ver o menor valor de acordo com a linha "inicio" e depois avaliar as proximas coluna com linha "menor valor da anterior",
-		// fazer isso 29 vezes + o retorno da penultima cidade para a primeira
+		//avaliar as colunas pra ver o menor valor de acordo com a linha "inicio" e depois avaliar as proximas coluna com linha "menor valor da coluna anterior"
+		//fazer isso 29 vezes + o retorno da penultima cidade para a primeira
 		
 		int menor;
 		for (int i = 0; i <3; ++i)
