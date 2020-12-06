@@ -26,7 +26,7 @@
 		{
 			for(int j = 0; j< 3; j++)
 			{
-		         if ( cidades[i][j] == cidades[j][i] )
+		         if ( cidades[i] == cidades[j] && cidades[j] == cidades[i] )
 				{
 					cidades[j][i]=cidades[i][j];
 				}
@@ -37,7 +37,7 @@
 		for (int i = 0; i <3; ++i)
 			for (int j = 0; j <3; ++j)
 			{   
-				if( i+1!=j+1 || cidades[i][j] != cidades[j][i] )
+				if( i+1!=j+1 )
 				{
 					
 				printf("Qual a distancia da cidade %d e a cidade %d?\n", i+1 , j+1);
@@ -55,7 +55,7 @@
 			}
 			printf("\n");
 		}
-		
+
 		//iniciar com a escolha da cidade de partida
 		int inicio;
 		printf("Qual a cidade de partida?\n");
@@ -64,12 +64,23 @@
 		//trocando a matriz pra linha ser a cidade de partida
 		for (int i = 0; i <3; ++i)
 			for (int j = 0; j <3; ++j)
+				for (int inicio; inicio <3; ++inicio)
 				{
 					cidades[i][j]=cidades[inicio][j];
 				}	
 
+		for (int i = inicio; i <3; ++i)
+		{
+			for (int j = 0; j <3; ++j)
+			{
+				printf("%d", cidades[inicio][j]);
+			}
+			printf("\n");
+		}
+
 		//avaliar as colunas pra ver o menor valor de acordo com a linha "inicio" e depois avaliar as proximas coluna com linha "menor valor da coluna anterior"
 		//fazer isso 29 vezes + o retorno da penultima cidade para a primeira
+		//o menor do próximo tem que ser diferente de 0 e diferente da ultima linha
 		
 		int menor;
 		for (int i = 0; i <3; ++i)
@@ -77,6 +88,7 @@
 			{
 				cidades[inicio][j]=cidades[menor][j];
 			}	
+		//somar as distancias que foram escolhidas
 		return 0;
 
 	}
