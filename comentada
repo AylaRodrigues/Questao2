@@ -1,0 +1,126 @@
+//Questao2
+//Garotes de Programa- Ayla Rodrigues de Moura, Douglas Mareli, João Vitor Spala , Sofia Kitaeva - Questão 2
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <limits.h>
+
+//armazenando a distancia entre as cidades
+	int main()
+	{
+		setlocale(LC_ALL, "");
+		//matriz de inteiros pra armazenar as distancias de cada cidade
+		int cidades[30][30];
+		int totalKm = 0;
+		int parada= 0; //variavel para avaliar quando parar
+	    
+	    //entrada das distancias
+		for (int i = 0; i <30; ++i)
+		{
+			for (int j = 0; j <30; ++j)
+			{   
+				if(i!=j && j>i)
+				{
+				printf("Qual a distancia da cidade %d e a cidade %d em Km?\n", i+1 , j+1);
+				scanf("%d", &cidades[i][j]);
+
+				}else if(i == j)//caso i seja igual a j, a coordenada da matriz recebe 0 por ser da cidade pra ela mesma 
+				{
+					cidades[i][j]= 0;
+
+				}else if(j<i)//pra quando for da cidade 3 pra 1 e da 1 pra 3, serem atribuidas a mesma distancia
+				{
+					cidades[i][j]=cidades[j][i];
+				}
+			}
+		}
+		
+		//iniciar com a escolha da cidade de partida
+		int inicio;
+		int visitadas[30]; //vetor visitadas com 30 posicoes, onde vamos armazenar as cidades 0 para não visitadas e 1 para visitadas
+		printf("Qual a cidade de partida?\n");
+		scanf("%d", &inicio);
+		
+		//atribuir 0 para todas as visitidas, como se 0 fosse quando ta vazia
+		for(int i= 0; i<30; i++)
+		{
+			visitadas[i]=0;
+		}
+		
+		visitadas[inicio-1] = 1;
+		int ct, menor,cidadeProxima;
+		//constante para determinar a proxima cidade
+		ct = inicio-1;
+		//atribuindo um valor menor que servirá para a comparação
+		if(ct==0){
+			menor=cidades[0][1];//menor recebe o elemento da posicao 0,1 , enquanto ct = 0
+		}else{
+			menor=cidades[inicio-1][0];
+		}
+		
+		printf("\n \n===== Seu trajeto =====\n \nCidade de partida: %d \n\n %d -->",inicio, inicio);
+		for(int j=0; j<30; j++) //caminho todo
+		{
+			for(int i=0; i<30; i++)//verificar o proximo
+		    {
+		        if(i != ct)
+		        {
+		  	        if(menor >= cidades[ct][i] && visitadas[i]==0)//quando as cidades nao foram visitadas ainda
+		            {
+		                menor = cidades[ct][i];
+		                cidadeProxima = i+1;
+		                totalKm+=menor;
+		                parada+=menor;
+		                if(parada==1000){
+		                	printf(" Vôce deve parar na cidade %d -->", i+1); //caso a viagem atual some exatamente 1000.
+		                	parada=0;
+						}else if(parada>1000){
+							printf(" Vôce deve parar na cidade %d -->",i);// caso a menor viagem ultrapasse mil, pare na cidade anterior.
+							parada=menor;
+						}else{
+							printf(" %d -->", i+1);
+						}
+		            }
+		          }
+		   	   }
+		   	   
+		    visitadas[cidadeProxima-1]=1;
+		    ct = cidadeProxima-1;
+		    
+			int x = 0; //para saber se ainda existem cidades não visitadas
+			for(int i = 0; i<30; i++)
+			{
+			    if(visitadas[i]==0) x++;//se o vetor visitadas igual a 0
+			}
+			
+		    if(x>0)//x=1 cidade ja visitada
+			{
+				for(int k=0; k<30; k++)//atribuir um novo valor para ser usado como menor caminho a partir da cidade atual
+			    {
+				    	if(ct!=k && visitadas[k]==0)
+				    	{
+				    		menor=cidades[ct][k];
+				    		break;
+						}
+					}
+			}else
+			{
+				totalKm+=cidades[ct][inicio-1]; 
+				if(parada==1000){
+		            printf(" Vôce deve parar na cidade %d --> %d\tFIM \n\n",ct+1,inicio); //caso a viagem atual some exatamente 1000. Ele para na cidade e a variael parada 0, pq a quilometragem tb zera
+		            parada=0;
+				}else if(parada>1000){
+					printf(" Vôce deve parar na cidade %d --> %d\tFIM \n\n",ct,inicio);// caso a menor viagem ultrapasse mil, pare na cidade anterior.
+					parada=menor;
+				}else{
+				printf(" %d\tFIM \n\n",inicio);
+				break;  //se não existir mais cidades a serem visitadas, pare o programa.
+				}
+			}
+		}
+		
+		printf("A viagem total foi: %d Km\n",totalKm);
+		
+	return 0;
+	}
